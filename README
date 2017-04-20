@@ -1,0 +1,44 @@
+Project Submission 4
+
+Directions:
+- To launch, run the main method of the ApplicationFrame Class
+- To zoom, scroll the mouse while over the mapPanel
+- To pan, drag the mapPanel
+- To select a starting point, left click
+- To select an end point, right click
+(Note: Only ways drawn in black are navigable)
+
+- To get direction, select a start and end point and click the directions button.
+- To start or stop driving, click the Drive Toggle button. If an end location is selected while
+driving is toggled on, a route will automatically be calculated from your location to the selected 
+destination.
+- Different maps can be loaded from the preloaded maps folder(Plainedge is my hometown and nyc contains
+an osm file of manhattan and park of brooklyn. nyc takes about 20 seconds to load, but wors
+well once loaded)
+- Reset will clear all routes, and selected points, and will set driving to false.
+
+In order to speed up route finding for files like the nyc or plainedge, I implemented a fibonacci heap as a 
+private class of the pathfinder class. I followed the specifications on wikipedia as well as I could, and 
+although there I haven't done any formal proofs for it, dijkstra's certainly runs much faster using it.
+
+Another optimization was made by storing the parent ways of driveable nodes in a hashtable in the data class.
+This increases the time it takes to load maps, but makes finding paths significantly faster, especially for maps
+with large amounts of nodes.
+
+Location tracking and on Route functionality is shared between the RouteTracker, an inner class of the mapPanel
+that implements GPSListener and provides the processEvent method, and the Route class, which can recieve a 
+location from the RouteTracker and tell whether the user is on route with a tolerance of ~50 feet using the 
+equation of a line and some linear algebra.
+
+
+In order to draw the map, I have a MapPanel class that maintains a dataConverter class, which converts 
+pixel coordinates to latitude and longitude (and visa versa) using a zoom factor, the size of the panel,
+and the current coordinates of the center of the panel. 
+
+- Zooming is implemented by changing the scale factor of the converter when the user scrolls the mouse.
+- Panning is implemented by adjusting the center coordinates of the mapPanel.
+- Resizing is handled by adjusting the dimensions of the mapPanel.
+- Selecting a closest node is implemented naively by iterating through the list of nodes. Also,
+currently it is programmed to only select nodes that would be driveable, ie: you can't select a node
+that represents part of the math building. This could easily be changed if it is undesireable though.
+
