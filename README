@@ -1,5 +1,7 @@
 Project Submission 4
 
+Compile with GPSDevice.jar
+ 
 Directions:
 - To launch, run the main method of the ApplicationFrame Class
 - To zoom, scroll the mouse while over the mapPanel
